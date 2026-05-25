@@ -10,4 +10,10 @@
     <string name="seguro_eliminar">"¿Seguro que quieres eliminar esta tarea?"</string>
     <string name="eliminar">Eliminar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="search_placeholder">Buscar por título</string>
+    <string name="search_button_desc">Buscar</string>
+    <string name="recientes">Más reciente</string>
+    <string name="antiguo">Más antiguo</string>
+    <string name="titulo_A_Z">Título (A-Z)</string>
+    <string name="titulo_Z_A">Título (Z-A)</string>
 </resources>

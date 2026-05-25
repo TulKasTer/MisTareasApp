@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,12 +48,17 @@ fun TasksScreen(
 
     val tasks by viewModel.tareas.collectAsStateWithLifecycle()
 
+    val searchInput by viewModel.searchInput
+        .collectAsStateWithLifecycle()
+
     var nuevaTareaTexto by remember { mutableStateOf("") }
 
     // Tarea pendiente de confirmar eliminación
     var tareaAEliminar by remember {
         mutableStateOf<TaskEntity?>(null)
     }
+
+    val currentSort by viewModel.currentSort.collectAsState()
 
     Scaffold { paddingValues ->
 
@@ -67,6 +73,24 @@ fun TasksScreen(
                 text = stringResource(R.string.app_title),
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(vertical = 16.dp)
+            )
+
+            SearchBar(
+                searchInput = searchInput,
+                onSearchInputChanged = { texto ->
+                    viewModel.onSearchInputChanged(texto)
+                },
+                onSearchClicked = {
+                    viewModel.executeSearch()
+                },
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            SortDropdown(
+                currentSortCode = currentSort,
+                onSortSelected = { newSortCode ->
+                    viewModel.updateSortBy(newSortCode)
+                }
             )
 
             Box(modifier = Modifier.weight(1f)) {
